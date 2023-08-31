@@ -9,7 +9,30 @@
       <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-      <h1>hello world</h1>
+      <header class="container mx-auto">
+            <div class="navbar bg-base-100">
+                  <div class="navbar-start mr-4">
+                    
+                    <a><img src="/img/Logo.png" class="" alt=""></a>
+                  </div>
+                  <div class="navbar-center ">
+                        <a class="btn">Sort by view</a>
+                  </div>
+                  <div class="navbar-end">
+                    <a class="btn btn-error text-white font-semibold">Blog</a>
+                  </div>
+                </div>
+                <hr class="mt-6">
+      </header>
+      <main class="container mx-auto">
+            <section class=" mt-10">
+                  <div id="tab-container" class="tab-container flex justify-center gap-x-5"></div>
+            </section>
+            <section class="mt-10">
+                  <div id="card-container" class="card-container grid grid-cols-4 gap-6"></div>
+            </section>
+      </main>
+      <footer></footer>
 
       <script src="js/ph-hero-tube.js"></script>
 </body>
