@@ -69,9 +69,9 @@ if(data.length>0){
   })
 }else{
    cardContainer.innerHTML=`
-   <div class="flex justify-center items-center flex-col gap-2 text-center w-full lg:ml-[500px] md:ml-[200px]">
+   <div class="flex justify-center items-center mt-10 flex-col gap-2 text-center w-full lg:ml-[500px] md:ml-[200px]">
    <img src="/img/Icon.png" class="w-[200px] h-[200px]  " alt="">
-   <p>Oooooops <br> No Data Found</p>
+   <p class="text-2xl font-bold">Oops,ther in no <br>content here</p>
  </div>
    `;
 }
@@ -81,16 +81,12 @@ if(data.length>0){
 // sort data function
 
 function sortByViews() {
-  // Use the sort() method to sort the array in descending order based on views
-  console.log('test');
+  // console.log('test');
   const sortData =storeData.sort((a, b) => {
     const viewsA = parseFloat(a.others?.views?.replace("K", "")) * 1000;
     const viewsB = parseFloat(b.others?.views?.replace("K", "")) * 1000;
-
     return viewsB - viewsA;
   });
- 
-  // console.log(storeData,80);
 dispalyData(sortData)
   
 }
