@@ -1,8 +1,8 @@
+let storeData =[]
 const handleCategory = async () => {
   const response = await fetch('https://openapi.programming-hero.com/api/videos/categories')
   const data = await response.json()
   // console.log(data);
-
   const tabContainer = document.getElementById('tab-container')
   data.data.forEach((category) => {
     // console.log(category);
@@ -20,23 +20,30 @@ const handleLodeItem = async (categoryId) => {
   console.log(categoryId);
   const response = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`)
   const data = await response.json();
-  // console.log(data);
+  storeData=data.data
+  // console.log(storeData);
+  dispalyData(storeData)
+}
+function dispalyData(data){
   const cardContainer = document.getElementById('card-container');
   cardContainer.innerHTML = ''
-  data.data.forEach((info) => {
+if(data.length>0){
+  data.forEach((info) => {
     console.log(info);
     const div = document.createElement('div');
-    // ---------------------
-    const timestamp = parseInt(info.others.posted_date) * 1000;
-    const date = new Date(timestamp); 
-
+    // time Zoon ar kaj
+    const timeConvert = parseInt(info.others.posted_date) * 1000;
+    const date = new Date(timeConvert);
     const hours = date.getHours();
     const minutes = date.getMinutes();
-
+    const postedDate = info.others.posted_date.trim();
+    const timeAgo = postedDate === '' ? '' : `${hours}hrs ${minutes}min ago`;
+    let isTimeAgo=timeAgo?`<div class=" bg-red-100 w-[170px] h-[30px] text-center mt-[-45px] ml-[120px] rounded-lg"><p>${timeAgo}</p></div> `:''
+    
     div.innerHTML = `
             <div class="card  w-[300px] h-[400px] bg-base-100 shadow-xl">
           <figure><img src="${info.thumbnail}" class="rounded" alt="image" /></figure>
-          <div class=" bg-red-100 w-[170px] h-[30px] text-center mt-[-45px] ml-[120px] rounded-lg"><p>${hours}hrs ${minutes}min ago</p></div>
+          ${isTimeAgo}
           <div class="card-body">
             <div class="flex justified-center items-center gap-x-4">
               <div class="w-[50px] h-[50px] bg-sky-500 rounded-3xl"><img src="${info.authors[0].profile_picture}" class="w-[50px] h-[50px] rounded-3xl " alt=""></div>
@@ -60,9 +67,33 @@ const handleLodeItem = async (categoryId) => {
             `;
     cardContainer.appendChild(div)
   })
+}else{
+   cardContainer.innerHTML=`
+   <div class="flex justify-center items-center flex-col gap-2 text-center w-full lg:ml-[500px] md:ml-[200px]">
+   <img src="/img/Icon.png" class="w-[200px] h-[200px]  " alt="">
+   <p>Oooooops <br> No Data Found</p>
+ </div>
+   `;
+}
+  
 }
 
+// sort data function
 
+function sortByViews() {
+  // Use the sort() method to sort the array in descending order based on views
+  console.log('test');
+  const sortData =storeData.sort((a, b) => {
+    const viewsA = parseFloat(a.others?.views?.replace("K", "")) * 1000;
+    const viewsB = parseFloat(b.others?.views?.replace("K", "")) * 1000;
+
+    return viewsB - viewsA;
+  });
+ 
+  // console.log(storeData,80);
+dispalyData(sortData)
+  
+}
 // go to bloge page function 
 
 function goToBlog() {
